@@ -6,84 +6,69 @@
 \usepackage{times}
 \usepackage{latexsym}
 
+
 % For proper rendering and hyphenation of words containing Latin characters (including in bib files)
 \usepackage[T1]{fontenc}
-% For Vietnamese characters
-% \usepackage[T5]{fontenc}
-% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
 
 % This assumes your files are encoded as UTF8
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{inconsolata}
 \usepackage{graphicx}
-
-% If the title and author information does not fit in the area allocated, uncomment the following
-%
-%\setlength\titlebox{<dim>}
-%
-% and set <dim> to something 5cm or larger.
-
-\title{Group X Progress Report:\\My Group's Project Name}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
 
 
-\author{First Author, Second Author, Third Author \\
-  \texttt{\{macid1,macid2,macid3\}@mcmaster.ca} }
+\title{Group 25 Progress Report:\\AI Essay Detector}
 
-%\author{
-%  \textbf{First Author\textsuperscript{1}},
-%  \textbf{Second Author\textsuperscript{1,2}},
-%  \textbf{Third T. Author\textsuperscript{1}},
-%  \textbf{Fourth Author\textsuperscript{1}},
-%\\
-%  \textbf{Fifth Author\textsuperscript{1,2}},
-%  \textbf{Sixth Author\textsuperscript{1}},
-%  \textbf{Seventh Author\textsuperscript{1}},
-%  \textbf{Eighth Author \textsuperscript{1,2,3,4}},
-%\\
-%  \textbf{Ninth Author\textsuperscript{1}},
-%  \textbf{Tenth Author\textsuperscript{1}},
-%  \textbf{Eleventh E. Author\textsuperscript{1,2,3,4,5}},
-%  \textbf{Twelfth Author\textsuperscript{1}},
-%\\
-%  \textbf{Thirteenth Author\textsuperscript{3}},
-%  \textbf{Fourteenth F. Author\textsuperscript{2,4}},
-%  \textbf{Fifteenth Author\textsuperscript{1}},
-%  \textbf{Sixteenth Author\textsuperscript{1}},
-%\\
-%  \textbf{Seventeenth S. Author\textsuperscript{4,5}},
-%  \textbf{Eighteenth Author\textsuperscript{3,4}},
-%  \textbf{Nineteenth N. Author\textsuperscript{2,5}},
-%  \textbf{Twentieth Author\textsuperscript{1}}
-%\\
-%\\
-%  \textsuperscript{1}Affiliation 1,
-%  \textsuperscript{2}Affiliation 2,
-%  \textsuperscript{3}Affiliation 3,
-%  \textsuperscript{4}Affiliation 4,
-%  \textsuperscript{5}Affiliation 5
-%\\
-%  \small{
-%    \textbf{Correspondence:} \href{mailto:email@domain}{email@domain}
-%  }
-%}
+
+\author{
+  Fei Xie, Ghena Hatoum, Haniye Hamidizadeh \\
+  \texttt{\{xief17,hatoumg,hamidizf\}@mcmaster.ca}
+}
+
+
 
 \begin{document}
 \maketitle
-% \begin{abstract}
-% \end{abstract}
 
 \section{Introduction}
 
-Here, write a brief introduction to the problem you are solving. This can be adapted from your problem description and motivation from the original proposal. This should be around 0.25-0.5 pages.
+The widespread and accessible nature of Generative AI (GenAI) tools, such as ChatGPT and Gemini, has created a significant shift in the educational landscape. While these tools are valuable for quick information retrieval, their rapid adoption precedes the necessary adaptations in academic practices. \\
+The core issue is that unchecked reliance on GenAI for academic work can have long-term developmental consequences for students. It prevents them from engaging in the process of formulating original thoughts and arguments, which is critical for developing their unique intellectual voice.
+A reliable AI Text Detector, integrated within the education system, would allow educators to foster responsible use of GenAI as an educational aid rather than a replacement for student effort. \\
+Developing an effective detector is challenging for several reasons: 
+\begin{itemize}
+\item{Low Accuracy of Existing Models: Current models are not accurate enough for real-world academic use.}
+\item{Evolving Realism: GenAI systems are constantly improving, generating increasingly human-like text, requiring the detector to be dynamically updated.}
+\item{Critical False Positive Rate: The model must achieve a near-zero false positive rate to ensure no student is wrongfully accused of plagiarism while maintaining high accuracy in identifying genuine misuse.}
+\end{itemize}
 
 \section{Related Work}
 
-Here, talk about the related work you encountered for your approach. Cite at least 5 references. Refer to item 2. No one has done exactly your task? Write about the most similar thing you can find. This should be around 0.25-0.5 pages.
+Detecting AI-generated text is closely connected to research in text classification. An overview of how methods such as TF-IDF have been used in traditional machine-learning models before the development of deep-learning techniques as seen in the survey “A Survey on Text Classification: From Traditional to Deep Learning” \cite{qianli2022}.
+\\In practical applications, AI text detection has been explored through competitions, such as the kaggle AI Text Detection Competition \cite{kaggle_ai_FarisML}. Public notebooks from the competition show examples of baseline systems that use TF-IDF combined with classifiers such as Logistic Regression or SVM. Two examples are the notebooks by Faris Al-Ahmadi \cite{kaggle_ai_FarisML} and Jasmine Mohamed \cite{kaggle_jasmine}, where TF-IDF is used to represent essays numerically before training classification models.
+\\More recent work focuses on neural network approaches. LSTM models are often used for text classification tasks because they can process text as a sequence and keep track of earlier context in the input. An example of this is shown in an LSTM text-classification notebook \cite{kaggle_ai_siti}. Transformer-based models such as DistilBERT have also been applied to similar classification problems. The KerasNLP starter notebook from the same Kaggle competition shows how DistilBERT can be fine-tuned for detecting AI-generated text \cite{kaggle_ai_alexia}.
+\\There is also research specifically focused on identifying patterns unique to AI-generated writing. The “DetectGPT” paper \cite{mitchell2023detectgptzeroshotmachinegeneratedtext} shows that AI-generated text often has different patterns in how words are used compared to human writing and discusses ways to detect those differences.
 
 \section{Dataset}
 
-You should write about your dataset here, following the guidelines regarding item 1. This section may be 0.5-1 pages. Depending on your specific dataset, you may want to include subsections for the preprocessing, annotation, etc.
+We will be using the DAIGT V2 Train Dataset from Kaggle \cite{kaggle_ai_daigt}. This comprehensive dataset is a collection of other datasets. One of the sub datasets contain argumentative essays written by grade 6 to 12 students. The remaining sub datasets contain AI-generated essays from numerous models as seen in Table~\ref{sub-datasets}.
+
+The dataset is pre\-labelled and additional columns include prompt\_name (original persuade prompt), source (original dataset), text (actual text content), and RDizzl3\_seven (Classifier built for a previous Kaggle competition, indicating whether the essays were written in response to one of the seven essay prompts for the competition). 
+\\Our team has dropped all the features other than text and the label.
+
+\subsection{Preprocessing}
+Using the text feature, we have extracted additional features. These include:
+\\\textbf{Word Statistics} \\
+The features include the total number of words in the text/document, the sum of words that repeat frequently (greater or equal to 5 times), and the sum of words that appear infrequently (less than 5 times). All these features are integers. 
+\\\textbf{Punctuations Statistics}\\
+The features include the number and ratios of the following punctuations: [\texttt{', -, ;, :, ., !, ?, (, ), [, ], \{, \}, /, ", ', \_}].
+The model incorporates the percentage of characters that are one of the 17 different punctuation marks shown above. These features are integers. It also includes the total punctuation percentage, which is the sum of these individual percentages. These values are between 0 and 1. 
+\\\textbf{TF-IDF Vectorizer} \\
+The model uses the TF-IDF vectorizer provided by ski-kit as another feature set. 
+Term frequency (TF) measures how often a word appears in a specific document as shown in Equation~\ref{eq:tf}. A higher frequency suggests greater importance within that document. Inverse document frequency (IDF) captures the term popularity as an inverse of the overall corpus as shown in Equation~\ref{eq:idf}. Our TF-IDF matrix has a max of 10000 features.
 
 \section{Features}
 
@@ -101,14 +86,31 @@ How are you evaluating your model? What results do you have so far? What are you
 
 Write about your plans for the remainder of the project. This should include a discussion of the feedback you received from your TA, and how you plan to improve your approach. Reflect on your implementation and areas for improvement. Refer to item 6. This may be around 0.5 pages.
 
-\section{Template Notes}
-
-You can remove this section or comment it out, as it only contains instructions for how to use this template. You may use subsections in your document as you find appropriate.
-
 \subsection{Tables and figures}
 
-See Table~\ref{citation-guide} for an example of a table and its caption.
-See Figure~\ref{fig:experiments} for an example of a figure and its caption.
+% See Figure~\ref{fig:experiments} for an example of a figure and its caption.
+\begin{table*}
+\centering
+\begin{tabular}{p{4cm}p{11cm}}
+\toprule
+\textbf{Dataset Name} & \textbf{Description} \\
+\midrule
+\textbf{Persuade Corpus 2.0} & Provides argumentative essays produced by 6 to 12 grade students. It was created by The Learning Agency and Vanderbilt University, originally pulled from the following GitHub repository. \\[0.5em]
+
+\textbf{ChatGPT} & Contains 2.5k student written texts sourced from the FeedBack Prize 3 Competition, and 2.5k AI-generated texts using ChatGPT. The compiled dataset includes only AI-generated texts and prompts. \\[0.5em]
+
+\textbf{Llama 70b + GPT-4} & Contains 9k essays generated by Llama 70b and Falcon 180b. Prompts come from the Persuade Corpus and GPT\-4, using a total of 35 prompts for generation. \\[0.5em]
+
+\textbf{LLM Generated Essays} & Contains 700 essays generated by LLMs\: 500 from GPT\-3.5\-Turbo and 200 from GPT\-4. \\[0.5em]
+
+\textbf{Claude Essays} & Contains 1000 essays generated by Claude-Instant-1 using 15 prompts from the Persuade Corpus. Prompts were sourced from the competition discussion. \\[0.5em]
+
+\textbf{PaLM Essays} & Contains 1384 essays generated by PaLM. Prompts were sourced from a Kaggle competition notebook. \\
+\bottomrule
+\end{tabular}
+\caption{Summary of Datasets Used in the DAIGT V2 Train Dataset}
+\label{sub-datasets}
+\end{table*}
 
 
 \begin{figure}[t]
@@ -129,43 +131,22 @@ See Figure~\ref{fig:experiments} for an example of a figure and its caption.
 
 \subsection{Citations}
 
-\begin{table*}
-  \centering
-  \begin{tabular}{lll}
-    \hline
-    \textbf{Output}           & \textbf{natbib command} & \textbf{ACL only command} \\
-    \hline
-    \citep{Gusfield:97}       & \verb|\citep|           &                           \\
-    \citealp{Gusfield:97}     & \verb|\citealp|         &                           \\
-    \citet{Gusfield:97}       & \verb|\citet|           &                           \\
-    \citeyearpar{Gusfield:97} & \verb|\citeyearpar|     &                           \\
-    \citeposs{Gusfield:97}    &                         & \verb|\citeposs|          \\
-    \hline
-  \end{tabular}
-  \caption{\label{citation-guide}
-    Citation commands supported by the style file.
-  }
-\end{table*}
-
-Table~\ref{citation-guide} shows the syntax supported by the style files.
-We encourage you to use the natbib styles.
-You can use the command \verb|\citet| (cite in text) to get ``author (year)'' citations, like this citation to a paper by \citet{Gusfield:97}.
-You can use the command \verb|\citep| (cite in parentheses) to get ``(author, year)'' citations \citep{Gusfield:97}.
-You can use the command \verb|\citealp| (alternative cite without parentheses) to get ``author, year'' citations, which is useful for using citations within parentheses (e.g. \citealp{Gusfield:97}).
-
 \subsection{References}
-
-\nocite{Ando2005,andrew2007scalable,rasooli-tetrault-2015}
 
 Many websites where you can find academic papers also allow you to export a bib file for citation or bib formatted entry. Copy this into the \texttt{custom.bib} and you will be able to cite the paper in the \LaTeX{}. You can remove the example entries.
 
 \subsection{Equations}
 
-An example equation is shown below:
 \begin{equation}
-  \label{eq:example}
-  A = \pi r^2
+  \label{eq:tf}
+  TF(w, d) = \frac{\text{count}(w, d)}{\text{total words in } d}
 \end{equation}
+
+\begin{equation}
+  \label{eq:idf}
+  IDF(w, C) = \log\left( \frac{|C|}{|\{\, d \in C : w \in d \,\}|} \right)
+\end{equation}
+
 
 Labels for equation numbers, sections, subsections, figures and tables
 are all defined with the \verb|\label{label}| command and cross references
@@ -173,16 +154,13 @@ to them are made with the \verb|\ref{label}| command.
 This an example cross-reference to Equation~\ref{eq:example}. You can also write equations inline, like this: $A=\pi r^2$.
 
 
-% \section*{Limitations}
-
 \section*{Team Contributions}
 
 Write in this section a few sentences describing the contributions of each team member. What did each member work on? Refer to item 7.
 
-% Bibliography entries for the entire Anthology, followed by custom entries
-%\bibliography{custom,anthology-overleaf-1,anthology-overleaf-2}
 
 % Custom bibliography entries only
+% \bibliographystyle {plainnat}
 \bibliography{custom}
 
 % \appendix
