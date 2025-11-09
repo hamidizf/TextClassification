@@ -84,13 +84,14 @@ How are you evaluating your model? What results do you have so far? What are you
 
 \section{Feedback and Plans}
 
-We have received relatively good feedback from the TA with our current implementation of using logistic regression. Even with our accuracy already being quite high, in the high 90s, we discussed with the TA to implement our model as a neural network instead. Using either the DistilBERT model or Long Short Term Memory (LSTM) Recurrent Neural Network (RNN).
-Furthermore, we want to also update our evaluation process and implement k-fold cross-validation to fine tune our hyperparameters and detect if our model is overfitting.\\
-We also plan on further splitting up the dataset into training, validation, and test sets, as opposed to only having a training and test set based on the suggestion from the TA.
+We have received relatively good feedback from the TA with our current implementation of using logistic regression. Even with our accuracy already being quite high, in the high 90s, we discussed with the TA to implement our model as a neural network instead.
+We will update out model to a Long Short Term Memory network. This will allow us to utilize our initial text feature, that we weren't able to use beforehand with a simple logistic regression approach. If our team have team, we will also investigate using a transformer, such as DistilBERT \cite{sanh2020distilbertdistilledversionbert}, for text classification.
+Based on the suggestion from the TA, we have updated our model training process by splitting up our dataset into training, validation, and test sets, as opposed to only having a training and test set. Our next step is to add k-fold cross validation to our three sets, this will allow us to detect any overfitting of our model and finetune the hyperparameters.\\
+Other potential next steps is to increase our dataset's sample with more AI generated essays from new models, such as the GPT5 family from ChatGPT and model 4 family from Claude. This will allow us to judge our models accuracy, as current AI generated samples were from older models, allowing us to determine if certain charactertistics that were present in older models, such as the excessive use of certain punctuations were over-contributing to our model predictions.
 \section{Team Contributions}
-
-Write in this section a few sentences describing the contributions of each team member. What did each member work on? Refer to item 7.
-
+\textbf{Fei:} Setup and initial implementation of the model, feature engineering for feature sets Word Statistics and Punctuation Statistics excluding TFIDF. Wrote the Dataset and Feedback and Plans sections for the progress report, and ported over the Introduction and Related work sections from team's word document.\\
+\textbf{Haniye:} \\
+\textbf{Ghena:} \\
 \bibliography{custom}
 
 \subsection*{Tables and figures}
