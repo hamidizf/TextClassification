@@ -80,7 +80,13 @@ Describe your model and implementation here. Refer to item 4. This may take arou
 
 \section{Results and Evaluation}
 
-How are you evaluating your model? What results do you have so far? What are your baselines? Refer to item 5. This may take around 0.5 pages.
+To evaluate our model, we split the data into training, validation, and test sets using an 80/10/10 split. The validation set allows us to monitor how well the model is learning during training, and the test set provides a final measure of performance on data the model has not seen before. For evaluation, we use both Accuracy and F1 Score. Accuracy indicates how often the model predicts the correct label overall, while the F1 Score reflects how well the model balances detecting AI-generated essays without incorrectly flagging human-written ones.
+
+We began by establishing baselines using different subsets of features. The first baseline used only punctuation-based features (for example, the relative frequency of commas, periods, and other punctuation marks). This model achieved approximately 0.83 accuracy and around 0.77 F1 on the test set. This suggests that while punctuation usage differs to some extent between human and AI-generated essays, punctuation alone is not sufficient for reliable classification.
+
+Next, we trained a model using only TF-IDF with N-grams, which represents each essay based on how strongly certain words and short phrases appear relative to the rest of the dataset. This model performed very well, achieving approximately 0.997 accuracy and about 0.997 F1 on the test set. We then combined TF-IDF with punctuation-based features and word-count-related features. The results were effectively the same as using TF-IDF alone, indicating that most of the meaningful signal for distinguishing between human and AI-written text is captured through the phrasing and word usage patterns identified by TF-IDF.
+
+These results suggest that differences in expression style and repeated phrasing patterns play a significant role in distinguishing AI-generated writing. Human authors tend to show greater variation in sentence structure and vocabulary, while AI models may reuse similar transitions or stylistic patterns. Since TF-IDF highlights which words and phrases are most characteristic within each essay, it was able to capture these distinctions effectively, which explains the strong performance of the TF-IDF-based model.
 
 \section{Feedback and Plans}
 
