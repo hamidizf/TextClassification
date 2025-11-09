@@ -96,7 +96,7 @@ Based on the suggestion from the TA, we have updated our model training process 
 Other potential next steps is to increase our dataset's sample with more AI generated essays from new models, such as the GPT5 family from ChatGPT and model 4 family from Claude. This will allow us to judge our models accuracy, as current AI generated samples were from older models, allowing us to determine if certain charactertistics that were present in older models, such as the excessive use of certain punctuations were over-contributing to our model predictions.
 \section{Team Contributions}
 \textbf{Fei:} Setup and initial implementation of the model, feature engineering for feature sets Word Statistics and Punctuation Statistics excluding TFIDF. Wrote the Dataset and Feedback and Plans sections for the progress report, and ported over the Introduction and Related work sections from team's word document.\\
-\textbf{Haniye:} \\
+\textbf{Haniye:} Improved the feature processing by generating the TF-IDF representation with N-grams and saving the vectorizer to a pickle file so it can be reused without retraining. Also optimized the punctuation feature extraction and updated the data split to include separate train, validation, and test sets. Wrote the Related Work and Results/Evaluation sections.\\
 \textbf{Ghena:} \\
 \bibliography{custom}
 
