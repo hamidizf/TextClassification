@@ -72,12 +72,52 @@ Term frequency (TF) measures how often a word appears in a specific document as 
 
 \section{Features}
 
-Describe any features you used for your model, or how your data was input to your model. Are you doing feature engineering or feature selection? Are you learning embeddings? Is it all part of one neural network? Refer to item 2. This may range from 0.25 pages to 0.5 pages.
+Our detection strategy relies entirely on feature engineering and makes no use of pre-trained language models or learned embeddings. The features are explicitly designed to capture distinct characteristics of the text: structural patterns, writing complexity, and vocabulary.
 
+The model input, represented by the matrix X, is a concatenation of three separate, hand-engineered feature sets:
+
+Structural Features (Punctuation Metrics): These 18 features (17 individual punctuation ratios + total percentage) capture the fine-grained writing style. This set is dense and low-dimensional.
+
+Complexity Features (Word Statistics): These 3 features (total word count, high-repeat word count, uncommon word count) attempt to measure stylistic complexity and originality. This set is also dense and low-dimensional.
+
+Vocabulary Features (TF-IDF): This is the high-dimensional representation of the text. It converts the actual words and two-word phrases (unigrams and bigrams) into 10,000 numerical weights, with higher weights indicating a word is both frequent in a document and rare across the entire dataset. This set is sparse (mostly zeros), making it memory-efficient.
+
+The combined matrix $X$ (with $10,021$ total features) is fed directly into the machine learning pipeline, where the classifier learns the relationship between these feature values and the binary label (Human/AI).
 \section{Implementation}
 
-Describe your model and implementation here. Refer to item 4. This may take around a page.
+The process of building the model is divided into three logical phases: Feature Preparation, Data Combination, and Training Pipeline & Optimization. 
 
+As described earlier, the initial step is to calculate three distinct types of features from the text data: Word Statistics, Punctuation Metrics, and the TF-IDF Vectorizer. This preparation phase focuses solely on generating these numerical values. 
+
+After feature generation, the data is prepared for the classifier. 
+
+The calculated features are combined into a single, comprehensive input matrix. Because the TF-IDF matrix is typically sparse (mostly zeros), a specialized function checks if any feature group is sparse. If so, it converts all other feature groups (like Punctuation Ratios) to a sparse format before stacking them together. This ensures memory efficiency when dealing with the large number of TF-IDF features. 
+
+The full dataset is then split, reserving 11.1\% of the data as an independent test set. 
+
+The final step is to build and train the classification model: 
+\begin{enumerate}
+  \item Pipeline Construction: A sequential pipeline is created to automate the workflow. 
+  \item Data Scaling: The first step in the pipeline is to standardize the features by scaling their values. We skip centering the data (ignoring the mean) before scaling. This is done to maintain the efficiency of the sparse TF-IDF matrix, which is a common practice in natural language processing when using sparse vectorizers. 
+  \item Model Training: A Logistic Regression classifier is trained on the scaled training data. The model is configured to run for a maximum of 200 iterations and utilizes all available CPU cores for faster parallel processing. The model fits its parameters to the training set by minimizing the underlying loss function. 
+\end{enumerate}
+The model trained using only Punctuation Metrics serves as our Official Baseline. Any subsequent model must outperform this 83.00\% accurate baseline to be considered a valuable improvement.  
+\begin{table}[ht]
+  \caption{Performance Accross Different Feature Sets}
+  \centering
+  \begin{tabular}{c c c c}
+    \hline\hline
+    Features Used & Total Features & Test Accuracy & Test F1 Score \\ [0.5ex]
+    Punction (Baseline) & 18 & 0.83 & 0.7758 \\
+    TF-IDF & 10 000 & 0.9973 & 0.9966 \\
+    Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
+    All features & 10 021 & 0.9971 & 0.9963 \\[1ex]
+    \hline 
+  \end{tabular}
+  \label{table:preformance} 
+\end{table}
+
+From these results we can see that the TF-IDF is the key predictor. We see that model using TF-IDF and Word Counts and the model using TF-IDF only have similar performance and that TF-IDF model achieves a near-perfect performance. This shows that it's overwhelmingly the most critical element. We can also see that adding more features leads to negligible changes.  
 \section{Results and Evaluation}
 
 To evaluate our model, we split the data into training, validation, and test sets using an 80/10/10 split. The validation set allows us to monitor how well the model is learning during training, and the test set provides a final measure of performance on data the model has not seen before. For evaluation, we use both Accuracy and F1 Score. Accuracy indicates how often the model predicts the correct label overall, while the F1 Score reflects how well the model balances detecting AI-generated essays without incorrectly flagging human-written ones.
@@ -97,7 +137,7 @@ Other potential next steps is to increase our dataset's sample with more AI gene
 \section{Team Contributions}
 \textbf{Fei:} Setup and initial implementation of the model, feature engineering for feature sets Word Statistics and Punctuation Statistics excluding TFIDF. Wrote the Dataset and Feedback and Plans sections for the progress report, and ported over the Introduction and Related work sections from team's word document.\\
 \textbf{Haniye:} Improved the feature processing by generating the TF-IDF representation with N-grams and saving the vectorizer to a pickle file so it can be reused without retraining. Also optimized the punctuation feature extraction and updated the data split to include separate train, validation, and test sets. Wrote the Related Work and Results/Evaluation sections.\\
-\textbf{Ghena:} \\
+\textbf{Ghena:} Added the punctuation function to the model, wrote up the implementation, preprocessing and feature sections.
 
 \bibliography{custom}
 
