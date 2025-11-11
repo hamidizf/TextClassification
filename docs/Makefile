@@ -1,8 +1,8 @@
 # Makefile
 # From https://danielkaes.wordpress.com/2009/03/14/compiling-latex-documents-using-makefiles/
 
-TEX=pdflatex
-BIBTEX=bibtex
+TEX=C:\MiKTeX\miktex\bin\x64\pdflatex
+BIBTEX=C:\MiKTeX\miktex\bin\x64\bibtex
 BUILDTEX=$(TEX) main.tex
 BUILDBIB=$(BIBTEX) main
 
