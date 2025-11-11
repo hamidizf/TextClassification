@@ -82,10 +82,11 @@ Complexity Features (Word Statistics): These 3 features (total word count, high-
 
 Vocabulary Features (TF-IDF): This is the high-dimensional representation of the text. It converts the actual words and two-word phrases (unigrams and bigrams) into 10,000 numerical weights, with higher weights indicating a word is both frequent in a document and rare across the entire dataset. This set is sparse (mostly zeros), making it memory-efficient.
 
-The combined matrix $X$ (with $10,021$ total features) is fed directly into the machine learning pipeline, where the classifier learns the relationship between these feature values and the binary label (Human/AI).
+The combined matrix X (with 10,021 total features) is fed directly into the machine learning pipeline, where the classifier learns the relationship between these feature values and the binary label (Human/AI).
+
 \section{Implementation}
 
-The process of building the model is divided into three logical phases: Feature Preparation, Data Combination, and Training Pipeline & Optimization. 
+The process of building the model is divided into three logical phases: Feature Preparation, Data Combination, and Training Pipeline \& Optimization. 
 
 As described earlier, the initial step is to calculate three distinct types of features from the text data: Word Statistics, Punctuation Metrics, and the TF-IDF Vectorizer. This preparation phase focuses solely on generating these numerical values. 
 
@@ -101,23 +102,9 @@ The final step is to build and train the classification model:
   \item Data Scaling: The first step in the pipeline is to standardize the features by scaling their values. We skip centering the data (ignoring the mean) before scaling. This is done to maintain the efficiency of the sparse TF-IDF matrix, which is a common practice in natural language processing when using sparse vectorizers. 
   \item Model Training: A Logistic Regression classifier is trained on the scaled training data. The model is configured to run for a maximum of 200 iterations and utilizes all available CPU cores for faster parallel processing. The model fits its parameters to the training set by minimizing the underlying loss function. 
 \end{enumerate}
-The model trained using only Punctuation Metrics serves as our Official Baseline. Any subsequent model must outperform this 83.00\% accurate baseline to be considered a valuable improvement.  
-\begin{table}[ht]
-  \caption{Performance Accross Different Feature Sets}
-  \centering
-  \begin{tabular}{c c c c}
-    \hline\hline
-    Features Used & Total Features & Test Accuracy & Test F1 Score \\ [0.5ex]
-    Punction (Baseline) & 18 & 0.83 & 0.7758 \\
-    TF-IDF & 10 000 & 0.9973 & 0.9966 \\
-    Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
-    All features & 10 021 & 0.9971 & 0.9963 \\[1ex]
-    \hline 
-  \end{tabular}
-  \label{table:preformance} 
-\end{table}
+The model trained using only Punctuation Metrics serves as our Official Baseline. Any subsequent model must outperform this 83.00\% accurate baseline to be considered a valuable improvement.  
 
-From these results we can see that the TF-IDF is the key predictor. We see that model using TF-IDF and Word Counts and the model using TF-IDF only have similar performance and that TF-IDF model achieves a near-perfect performance. This shows that it's overwhelmingly the most critical element. We can also see that adding more features leads to negligible changes.  
+From these results we can see that the TF-IDF is the key predictor. We see that model using TF-IDF and Word Counts and the model using TF-IDF only have similar performance and that TF-IDF model achieves a near-perfect performance. This shows that it's overwhelmingly the most critical element. We can also see that adding more features leads to negligible changes. 
 \section{Results and Evaluation}
 
 To evaluate our model, we split the data into training, validation, and test sets using an 80/10/10 split. The validation set allows us to monitor how well the model is learning during training, and the test set provides a final measure of performance on data the model has not seen before. For evaluation, we use both Accuracy and F1 Score. Accuracy indicates how often the model predicts the correct label overall, while the F1 Score reflects how well the model balances detecting AI-generated essays without incorrectly flagging human-written ones.
@@ -126,7 +113,7 @@ We began by establishing baselines using different subsets of features. The firs
 
 Next, we trained a model using only TF-IDF with N-grams, which represents each essay based on how strongly certain words and short phrases appear relative to the rest of the dataset. This model performed very well, achieving approximately 0.997 accuracy and about 0.997 F1 on the test set. We then combined TF-IDF with punctuation-based features and word-count-related features. The results were effectively the same as using TF-IDF alone, indicating that most of the meaningful signal for distinguishing between human and AI-written text is captured through the phrasing and word usage patterns identified by TF-IDF.
 
-These results suggest that differences in expression style and repeated phrasing patterns play a significant role in distinguishing AI-generated writing. Human authors tend to show greater variation in sentence structure and vocabulary, while AI models may reuse similar transitions or stylistic patterns. Since TF-IDF highlights which words and phrases are most characteristic within each essay, it was able to capture these distinctions effectively, which explains the strong performance of the TF-IDF-based model.
+The model performance metrics are summarized in Table~\ref{table:preformance}, where the full set of results is available. These results suggest that differences in expression style and repeated phrasing patterns play a significant role in distinguishing AI-generated writing. Human authors tend to show greater variation in sentence structure and vocabulary, while AI models may reuse similar transitions or stylistic patterns. Since TF-IDF highlights which words and phrases are most characteristic within each essay, it was able to capture these distinctions effectively, which explains the strong performance of the TF-IDF-based model.
 
 \section{Feedback and Plans}
 
@@ -177,6 +164,20 @@ See Table \ref{sub-datasets}
   \label{eq:idf}
   IDF(w, C) = \log\left( \frac{|C|}{|\{\, d \in C : w \in d \,\}|} \right)
 \end{equation}
-
+\begin{table*}[htb]
+\centering
+\caption{Performance Accross Different Feature Sets}
+\label{table:preformance}
+\begin{tabular}{l c c c} 
+  \toprule
+  \textbf{Features Used} & \textbf{Total Features} & \textbf{Test Accuracy} & \textbf{Test F1 Score} \\
+  \midrule
+  Punction (Baseline) & 18 & 0.83 & 0.7758 \\
+  TF-IDF & 10 000 & 0.9973 & 0.9966 \\
+  Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
+  All features & 10 021 & 0.9971 & 0.9963 \\
+  \bottomrule
+\end{tabular}
+\end{table*}
 % \bibliographystyle {plainnat}
 \end{document}
