@@ -18,6 +18,7 @@
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsmath, amssymb}
+\usepackage{hyperref}
 
 
 \title{Group 25 Final Project Report:\\AI Essay Detector}
@@ -35,23 +36,42 @@
 
 \section{Introduction}
 
-Your report should have an introduction. You may largely copy the
-motivation and problem description from your previous reports. Write about previous work
-on your task or the most related task you can find. Note that you should include at least
-7 references in your report. Did you discover anything in related work that influenced your
-direction after the progress report was due? References should be integrated as part of the
-discussion of the context of your work. They should not simply be listed as a set of relevant
-papers with no explanation
+The widespread and accessible nature of Generative AI (GenAI) tools, such as ChatGPT and Gemini, has created a significant shift in the educational landscape. While these tools are valuable for quick information retrieval, their rapid adoption precedes the necessary adaptations in academic practices. \\
+The core issue is that unchecked reliance on GenAI for academic work can have long-term developmental consequences for students. It prevents them from engaging in the process of formulating original thoughts and arguments, which is critical for developing their unique intellectual voice.
+A reliable AI Text Detector, integrated within the education system, would allow educators to foster responsible use of GenAI as an educational aid rather than a replacement for student effort. \\
+Developing an effective detector is challenging for several reasons: 
+\begin{itemize}
+\item{Low Accuracy of Existing Models: Current models are not accurate enough for real-world academic use.}
+\item{Evolving Realism: GenAI systems are constantly improving, generating increasingly human-like text, requiring the detector to be dynamically updated.}
+\item{Critical False Positive Rate: The model must achieve a near-zero false positive rate to ensure no student is wrongfully accused of plagiarism while maintaining high accuracy in identifying genuine misuse.}
+\end{itemize}
+Detecting AI-generated text is closely connected to research in text classification. An overview of how methods such as TF-IDF have been used in traditional machine-learning models before the development of deep-learning techniques as seen in the survey “A Survey on Text Classification: From Traditional to Deep Learning” \cite{qianli2022}.
+\\In practical applications, AI text detection has been explored through competitions, such as the kaggle AI Text Detection Competition \cite{kaggle_ai_FarisML}. Public notebooks from the competition show examples of baseline systems that use TF-IDF combined with classifiers such as Logistic Regression or SVM. Two examples are the notebooks by Faris Al-Ahmadi \cite{kaggle_ai_FarisML} and Jasmine Mohamed \cite{kaggle_jasmine}, where TF-IDF is used to represent essays numerically before training classification models.
+\\More recent work focuses on neural network approaches. LSTM models are often used for text classification tasks because they can process text as a sequence and keep track of earlier context in the input. An example of this is shown in an LSTM text-classification notebook \cite{kaggle_ai_siti}. Transformer-based models such as DistilBERT have also been applied to similar classification problems. The KerasNLP starter notebook from the same Kaggle competition shows how DistilBERT can be fine-tuned for detecting AI-generated text \cite{kaggle_ai_alexia}.
+\\There is also research specifically focused on identifying patterns unique to AI-generated writing. The “DetectGPT” paper \cite{mitchell2023detectgptzeroshotmachinegeneratedtext} shows that AI-generated text often has different patterns in how words are used compared to human writing and discusses ways to detect those differences.
 
 \section{Dataset}
+We will be using the DAIGT V2 Train Dataset from Kaggle \cite{kaggle_ai_daigt} to train the model, as well as adding a new, manually compiled dataset with AI generated and human written essays to evaluate the trained models performance on. 
 
-You should describe the dataset properties and any preprocessing operations
-you performed. If you are annotating data yourself, describe the annotation procedure you
-developed and followed. Describe any changes you made to the dataset in a subsection if you
-have changed your dataset since the progress report. Some of you found that your dataset
-was too difficult or too easy. What did you have to change about your data? Did you have
-to augment the data or move to a completely new source? If your dataset did not change, it
-is reasonable to leave this mostly as is from the progress report. often a word appears in a specific document as shown in Equation~\ref{eq:tf}. A higher frequency suggests greater importance within that document. Inverse document frequency (IDF) captures the term popularity as an inverse of the overall corpus as shown in Equation~\ref{eq:idf}. Our TF-IDF matrix has a max of 10000 features.
+\subsection{DAIGT V2 Train Dataset}\label{db_train}
+To start, the DAIGT V2 Train Dataset is a comprehensive dataset containing a collection of other datasets. One of the sub datasets contain argumentative essays written by grade 6 to 12 students. The remaining sub datasets contain AI-generated essays from numerous models as seen in Table~\ref{sub-datasets}.
+The dataset is pre\-labelled and additional columns include prompt\_name (original persuade prompt), source (original dataset), text (actual text content), and RDizzl3\_seven (Classifier built for a previous Kaggle competition, indicating whether the essays were written in response to one of the seven essay prompts for the competition). 
+\\Our team has dropped all the features other than text and the label.
+
+\subsubsection{Preprocessing}
+Using the text feature, we have extracted additional features. These include:
+\\\textbf{Word Statistics} \\
+The features include the total number of words in the text/document, the sum of words that repeat frequently (greater or equal to 5 times), and the sum of words that appear infrequently (less than 5 times). All these features are integers. 
+\\\textbf{Punctuations Statistics}\\
+The features include the number and ratios of the following punctuations: [\texttt{', -, ;, :, ., !, ?, (, ), [, ], \{, \}, /, ", ', \_}].
+The model incorporates the percentage of characters that are one of the 17 different punctuation marks shown above. These features are integers. It also includes the total punctuation percentage, which is the sum of these individual percentages. These values are between 0 and 1. 
+\\\textbf{TF-IDF Vectorizer} \\
+The model uses the TF-IDF vectorizer provided by ski-kit as another feature set. 
+Term frequency (TF) measures how often a word appears in a specific document as shown in Equation~\ref{eq:tf}. A higher frequency suggests greater importance within that document. Inverse document frequency (IDF) captures the term popularity as an inverse of the overall corpus as shown in Equation~\ref{eq:idf}. Our TF-IDF matrix has a max of 10000 features.
+\subsection{New Dataset}\label{db_new}
+The new dataset contains 15 AI generated essays using ChatGPT 5.1 and 13 human written essays. This dataset is put through the same preprocessing steps as the DAIGT V2 Train Dataset and evaluated using the trained model.
+The table of the prompts used for the essay can be found in Table~\ref{ai_generated_prompts}. The human essays were sourced from multiple websites, which can be found in Table~\ref{human_essays}. The essays vary in quality, with some being used as examples of excellent essays,
+while others scored low in their respective rubric.
 
 \section{Features}
 Describe your model inputs. What feature engineering or
@@ -59,6 +79,7 @@ representation learning was performed? Why did you add these features? Why does 
 sense to include them? Did you perform any feature selection or augmentation? One good
 way to vary your experiments is to try different kinds of features as inputs. How did you
 vary the features used for your experiments
+
 \section{Implementation}
 Describe the model implementation. You should have several mod-
 els or versions of your model that you have run on your data. You should have a simple
@@ -72,14 +93,21 @@ implemented a complex model with many parts, you should consider providing ablat
 This means different experiments where you only include one feature at a time so you can
 tell what feature is contributing more to the performance that you see.
 \section{Evaluation}
+The total training dataset [see \ref{db_train}] was split into 80/10/10 for training, validation, and test respectively. Cross-validation was not used as we had sufficient datapoints, almost 45 thousand, to adequately train the model.
+Cross-validation in this case would’ve been too computationally expensive for relatively small benefits to reduce variance of the training sets. For the test set, we use the same evaluation methods as our progress report, where we evaluate the accuracy, precision, recall and f1-score of both the validation and test sets after training.
+However, since we are still only evaluating from the training dataset, the results have become less relevant, as most of our models would have almost 100\% accuracy and F1 scores. Following the restructuring of our model to allow us to pass in data frames and predict our model on new data.
+Our model evaluation strategy evolved to testing the model against the new dataset [see \ref{db_new}] while using the same metrics of  accuracy, precision, recall and F1-score.
+The metrics were adequate, as the results would vary significantly against the new dataset, allowing us to accurately access the performance of our models against each other.   
 
-Describe the evaluation strategy. What are your train/validation/test
-splits (size and label distributions)? Are you using cross-validation? What metrics are you
-using for evaluation? Did you find that your metrics from the progress report stage were
-adequate?
 \section{Progress}
-Reflect on your plan from your progress report. Did you follow-through on
-your plan? Did your plan change course? Why?
+We followed through 50\% of our plan from the progress report. We brought in new data [see \ref{db_new}] to further test our model’s accuracy.
+This helped the team identify model performance, as our earlier evaluation strategy was proving irrelevant, as all models scored over 98\% accuracy from the test set [see \ref{db_train}].
+We ended up not implementing k-fold cross validation as it would be too computationally expensive for relatively limited improvements as we had an adequate dataset size.
+Moving to the model itself, we ended up not implementing a Neural Network. Although we did test using a Neural Network, we used Multi-layer Perceptron (MLP) instead of Long Short Term Memory (LSTM).
+The main cause of that was due to our TF-IDF vectorization, LSTM requires a sequence input, however our current model preprocessing converts that into a un-sequenced vector.
+This distinction makes our current structure incompatible with LSTM, we would’ve had to completely rebuild our model’s preprocessing, pipeline and feature sets.
+However, even with MLP, the training time was extremely long, and the resulting accuracy was very similar to the model we ended up going with the Linear Support Vector Classification (SVC) model since we were using TF-IDF and the accuracy was almost identical to MLP while being much faster, which is what we ended up with. 
+
 \section{Error Analysis}
 Describe how you systematically examine the errors your model
 makes and provide supporting figures, stats, examples (e.g., confusion matrices, qualitative
@@ -88,14 +116,14 @@ at? What does it seem to be bad at? How does the performance of your models diff
 patterns do you notice in the errors your model seems to make? What do you think you
 could do to specifically address those issues if you were to continue working on this mod
 \section{Team Contributions}
-\textbf{Fei:}  \\
+\textbf{Fei:}  Restructured the model to allow users to pass in new datasets and predict using trained model. Created the new dataset used in the new evaluation strategy. Wrote sections Evaluation and Progress. Updated sections Introduction and Dataset.\\
 \textbf{Haniye:} \\
 \textbf{Ghena:} \\
 \clearpage
 \bibliography{custom}
 
 \subsection*{Tables and figures}
-See Table \ref{sub-datasets}
+See Table \ref{sub-datasets}, Table \ref{ai_generated_prompts}, and Table \ref{human_essays}.
 \begin{table*}
 \centering
 \begin{tabular}{p{4cm}p{11cm}}
@@ -119,6 +147,37 @@ See Table \ref{sub-datasets}
 \label{sub-datasets}
 \end{table*}
 
+\begin{table*}
+\centering
+\begin{tabular}{p{4cm}p{11cm}}
+\toprule
+\textbf{Model} & \textbf{Prompt} \\
+\midrule
+\textbf{GPT 5.1} & Write an argumentative essay about cars and transportation, in the style of a 6th--12th grader, using the following essay prompt: ``Today the majority of humans own and operate cell phones on a daily basis. In essay form, explain if drivers should or should not be able to use cell phones in any capacity while operating a vehicle.'' \\[0.5em]
+\textbf{GPT 5.1} & Write five argumentive essay about cars and transportation, in the style of a 6th-12th grader with the following essay prompt: "Some schools require students to complete summer projects to assure they continue learning during their break. Should these summer projects be teacher-designed or student-designed? Take a position on this question. Support your response with reasons and specific examples. " \\[0.5em]
+\textbf{GPT 5.1} & Write five argumentive essay about cars and transportation, in the style of a 6th-12th grader with the following essay prompt: "Your principal has decided that all students must participate in at least one extracurricular activity. For example, students could participate in sports, work on the yearbook, or serve on the student council. Do you agree or disagree with this decision? Use specific details and examples to convince others to support your position. " \\[0.5em]
+\bottomrule
+\end{tabular}
+\caption{Prompts Used to Generate Argumentative Essays, 5 essays were generated from each}
+\label{ai_generated_prompts}
+\end{table*}
+
+\begin{table*}
+\centering
+\begin{tabular}{p{11cm}p{4cm}}
+\toprule
+\textbf{Source} & \textbf{Essays Used} \\
+\midrule
+\textbf{PrepScholar \cite{prepscholar}} & 3 \\[0.5em]
+\textbf{Skyline College \cite{skylinecollege_essay_guide}} & 1 \\[0.5em]
+\textbf{Government of British Columbia \cite{bced_en12_comp_sp}} & 9 \\[0.5em]
+\bottomrule
+\end{tabular}
+\caption{Sources of Human written essays}
+\label{human_essays}
+\end{table*}
+
+
 \subsection*{Equations}
 
 \begin{equation}
@@ -130,20 +189,20 @@ See Table \ref{sub-datasets}
   \label{eq:idf}
   IDF(w, C) = \log\left( \frac{|C|}{|\{\, d \in C : w \in d \,\}|} \right)
 \end{equation}
-\begin{table*}[htb]
-\centering
-\caption{Performance Accross Different Feature Sets}
-\label{table:preformance}
-\begin{tabular}{l c c c} 
-  \toprule
-  \textbf{Features Used} & \textbf{Total Features} & \textbf{Test Accuracy} & \textbf{Test F1 Score} \\
-  \midrule
-  Punction (Baseline) & 18 & 0.83 & 0.7758 \\
-  TF-IDF & 10 000 & 0.9973 & 0.9966 \\
-  Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
-  All features & 10 021 & 0.9971 & 0.9963 \\
-  \bottomrule
-\end{tabular}
-\end{table*}
-% \bibliographystyle {plainnat}
+
+% \begin{table*}[htb]
+% \centering
+% \caption{Performance Accross Different Feature Sets}
+% \label{table:preformance}
+% \begin{tabular}{l c c c} 
+%   \toprule
+%   \textbf{Features Used} & \textbf{Total Features} & \textbf{Test Accuracy} & \textbf{Test F1 Score} \\
+%   \midrule
+%   Punction (Baseline) & 18 & 0.83 & 0.7758 \\
+%   TF-IDF & 10 000 & 0.9973 & 0.9966 \\
+%   Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
+%   All features & 10 021 & 0.9971 & 0.9963 \\
+%   \bottomrule
+% \end{tabular}
+% \end{table*}
 \end{document}
