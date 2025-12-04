@@ -73,25 +73,27 @@ The new dataset contains 15 AI generated essays using ChatGPT 5.1 and 13 human w
 The table of the prompts used for the essay can be found in Table~\ref{ai_generated_prompts}. The human essays were sourced from multiple websites, which can be found in Table~\ref{human_essays}. The essays vary in quality, with some being used as examples of excellent essays,
 while others scored low in their respective rubric.
 
-\section{Features}
-Describe your model inputs. What feature engineering or
-representation learning was performed? Why did you add these features? Why does it make
-sense to include them? Did you perform any feature selection or augmentation? One good
-way to vary your experiments is to try different kinds of features as inputs. How did you
-vary the features used for your experiments
+\section{Features and Inputs}
+Our feature design focused on capturing different characteristics of essay writing, from structure to vocabulary. Since the raw text alone is not expressive enough for classification, we extracted several sets of features that highlight different aspects of how the writing is formed. The first group we added was punctuation-based features. This came from our intuition that AI generated essays tend to use certain punctuation marks more consistently. For each punctuation symbol, we computed its ratio relative to the total character count, which resulted in 18 punctuation features. After calculating them, we noticed clear differences in the averages. For instance, AI essays used noticeably more commas, dashes, brackets, and colons, while human essays used more semicolons, question marks, and slashes. These differences are small individually, but when combined, they capture stylistic habits that help distinguish the two types of writing.  \\
 
+We also included a small set of word-based features, such as word count, repeated words, and uncommon words. These three features measure basic writing complexity and repetition patterns. Our reasoning was that AI models sometimes repeat ideas more or use more polished vocabulary compared to students. These features did not perform well on their own, but they added small improvements when combined with the other feature groups. The main representation of the essay text came from TF-IDF with unigrams and bigrams. We chose this approach because it is lightweight to compute and captures both individual words and short phrase patterns. TF-IDF turns the essay into numerical weights, and in our case it produced 10,000 dimensions. This became the largest feature set and also the most informative. Most of the model’s performance came from these phrase frequency patterns, which seemed to reflect differences in how AI models structure sentences compared to humans.  \\
+
+To vary the inputs and compare their impact, we trained models using several combinations: punctuation only, TF-IDF only, TF-IDF with punctuation, and TF-IDF with punctuation plus the word statistics. We also experimented once with SBERT embeddings, since they create dense sentence level vectors that might capture meaning more directly. However, SBERT did not improve accuracy, was much slower to compute, made the pipeline more complicated, and did not help with detecting newly generated GPT-5 essays. This may be because our training data came from older AI models, and the SBERT embeddings did not shift the decision boundary enough to adapt to newer writing styles. In practice, the classifier’s predictions on GPT-5 essays were almost unchanged whether SBERT was included or not. Because of this, we removed SBERT from our final setup. In the end, our model uses all three hand engineered feature sets together, with TF-IDF contributing most of the predictive power and the other features adding smaller signals related to style and writing habits. \\
 \section{Implementation}
-Describe the model implementation. You should have several mod-
-els or versions of your model that you have run on your data. You should have a simple
-baseline to compare it to (likely majority vote), and may have other baselines from related
-work. Your model should outperform your simple baseline. For most of you, your model
-should also outperform at least one other trained model baseline. If it does not outperform
-this baseline and you expected it to, why doesn’t it? You should be able to provide an expla-
-nation. This explanation can also be part of your error analysis section. You do not have to outperform all models from previous work, but you should have an approach you implement
-for comparison. What was your loss function? Describe the optimization technique. If you
-implemented a complex model with many parts, you should consider providing ablations.
-This means different experiments where you only include one feature at a time so you can
-tell what feature is contributing more to the performance that you see.
+Our implementation went through several stages because we tested multiple models and several feature combinations before choosing the final setup. Before comparing models, we checked the label distribution in the dataset and found that about 61 percent of all essays were human written, giving us a simple majority baseline of roughly 0.61 accuracy. Alongside this, we used a punctuation only model as a stronger feature baseline, which reached about 0.83 accuracy and became our main comparison point when evaluating different feature combinations. \\
+
+At the start of the project, we experimented with an MLP classifier to see whether using a neural network from the beginning would give us a stronger starting point. Once we compared it with Logistic Regression, which we had originally planned to use based on our proposed solution and related work, we found that the accuracy was almost the same. Logistic Regression trained much faster and had already been used successfully in similar text classification setups that relied on TF IDF with N grams. Because the performance was similar and the training speed was much better, we continued with Logistic Regression during the early stages of the project.\\
+
+After the progress report, we updated the classifier to Linear SVC. Support Vector Machines are commonly used for text classification and tend to perform well with sparse TF IDF features, which fits our preprocessing pipeline. Linear SVC optimizes a hinge loss objective to find a separating boundary between the two classes, and it trains efficiently even with high dimensional inputs. This made it a suitable choice for our final model. \\
+
+We also attempted to implement an LSTM model, as originally planned in our proposal, but our preprocessing pipeline was not designed for sequence-based architectures. TF-IDF transforms text into an unordered vector, which does not align with the sequential input format required for LSTM. Converting our entire pipeline to support sequential models would have required major restructuring, and our initial attempts did not run successfully, so we decided not to continue with that approach.\\
+
+To understand how much each type of feature contributed to performance, we ran several experiments with different combinations of inputs. These included punctuation only, word statistics only, TF IDF only, TF IDF with punctuation, and TF IDF with punctuation and word statistics. TF IDF alone performed the best, reaching almost perfect accuracy on the validation and test sets. The word statistics model performed poorly on its own, while punctuation alone provided a stronger baseline. Combining everything gave results similar to TF IDF alone, but the smaller feature sets helped with stability, so we kept them in the final configuration.\\
+
+Once we had a model that performed very well on the original dataset, we tested it on a new set of essays that included human written samples from online sources and AI generated samples produced by GPT 5.1. This allowed us to evaluate generalization rather than relying only on the original training distribution. The performance on the new dataset dropped noticeably compared to the original test set. Since the new essays came from newer AI models, we suspected the drop was related to dataset shift rather than a failure of the classifier itself. This motivated us to try SBERT embeddings, since they create dense sentence level vectors that might capture more meaning than simple TF IDF features. However, adding SBERT did not improve the results, and the predictions were almost unchanged. Training time also increased significantly and took around half an hour. We believe this is because the model was already overfitted to features from older AI generated essays in the training dataset, so adding SBERT could not shift the decision boundary enough to help with GPT 5 style writing. Since SBERT did not reduce the error on the new dataset and made the pipeline much slower, we removed it. \\
+
+Our final model uses Linear SVC with TF IDF, punctuation features, and word statistics. This version consistently outperformed both the majority baseline and the punctuation only baseline. Although it did not generalize well to essays written by GPT 5, this appears to be due to changes in writing style across different generations of large language models rather than an issue with the classifier. Within the scope of the training distribution, the final setup gave us the strongest and most stable performance. \\
+
 \section{Evaluation}
 The total training dataset [see \ref{db_train}] was split into 80/10/10 for training, validation, and test respectively. Cross-validation was not used as we had sufficient datapoints, almost 45 thousand, to adequately train the model.
 Cross-validation in this case would’ve been too computationally expensive for relatively small benefits to reduce variance of the training sets. For the test set, we use the same evaluation methods as our progress report, where we evaluate the accuracy, precision, recall and f1-score of both the validation and test sets after training.
@@ -131,8 +133,8 @@ To specifically address the fragility of the TF-IDF and punctuation features and
 
 \section{Team Contributions}
 \textbf{Fei:}  Restructured the model to allow users to pass in new datasets and predict using trained model. Created the new dataset used in the new evaluation strategy. Wrote sections Evaluation and Progress. Updated sections Introduction and Dataset.\\
-\textbf{Haniye:} \\
 \textbf{Ghena:} Implemented MLPClassifier and tried to implement and tried to implement KerasClassifier with dropout, however there wasn't enough CPU space and couldn't run. Wrote the Error Analysis section.\\
+\textbf{Haniye:} Explored SBERT and LSTM extensions to the model and wrote the Features and Inputs section as well as the Implementation section of the report.\\
 \clearpage
 \bibliography{custom}
 

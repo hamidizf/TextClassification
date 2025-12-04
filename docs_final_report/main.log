@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.11.10)  3 DEC 2025 20:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.11.10)  3 DEC 2025 20:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -587,23 +587,97 @@ nts/enc/dvips/base/8r.enc}{C:/MiKTeX/fonts/enc/dvips/inconsolata/i4-t1-0.enc}
 ]
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
 (Font)              scaled to size 10.95pt on input line 66.
- [2]
-Underfull \hbox (badness 3128) in paragraph at lines 129--130
+
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+
+ []
+
+
+Underfull \hbox (badness 1014) in paragraph at lines 81--82
+\T1/ptm/m/n/10.95 (+20) clas-si-fier's pre-dic-tions on GPT-5 es-says were
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
+
+ []
+
+[2]
+Underfull \hbox (badness 1337) in paragraph at lines 83--84
+\T1/ptm/m/n/10.95 (+20) base-line, which reached about 0.83 ac-cu-racy
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+
+ []
+
+
+Underfull \hbox (badness 1466) in paragraph at lines 87--88
+[]\T1/ptm/m/n/10.95 (+20) After the progress re-port, we up-dated the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
+
+ []
+
+
+Underfull \hbox (badness 3547) in paragraph at lines 91--92
+\T1/ptm/m/n/10.95 (+20) con-tributed to per-for-mance, we ran sev-eral
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+
+Underfull \hbox (badness 1325) in paragraph at lines 93--94
+\T1/ptm/m/n/10.95 (+20) SBERT em-bed-dings, since they cre-ate dense
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
+
+ []
+
+[3]
+Underfull \hbox (badness 3690) in paragraph at lines 95--96
+\T1/ptm/m/n/10.95 (+20) This ver-sion con-sis-tently out-per-formed both
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
+
+ []
+
+[4]
+Underfull \hbox (badness 3128) in paragraph at lines 131--132
 []\T1/ptm/m/n/10.95 (+20) Implement Deep Neu-ral Net-works with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--136
+Underfull \hbox (badness 10000) in paragraph at lines 135--138
 
  []
 
-
-Underfull \vbox (badness 3612) has occurred while \output is active []
-
- [3]
-[4
-
-] (main.bbl
+[5] (main.bbl
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
 (Font)              scaled to size 10.0pt on input line 7.
 
@@ -849,68 +923,68 @@ i$[][]\T1/ptm/m/n/10 (-20) .
  []
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 147--147
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
 []\T1/ptm/b/n/10.95 (+20) Persuade Cor-pus 2.0
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 149--149
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
 []\T1/ptm/b/n/10.95 (+20) ChatGPT ([][]Paullier[][],
  []
 
 
-Underfull \hbox (badness 6252) in paragraph at lines 151--151
+Underfull \hbox (badness 6252) in paragraph at lines 153--153
 []\T1/ptm/b/n/10.95 (+20) Llama 70b + GPT-4
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--157
+Underfull \hbox (badness 10000) in paragraph at lines 159--159
 []\T1/ptm/b/n/10.95 (+20) PaLM Es-says ([][]Rizqi[][],
  []
 
-<cm_val.png, id=142, 372.1905pt x 328.8285pt>
+<cm_val.png, id=146, 372.1905pt x 328.8285pt>
 File: cm_val.png Graphic file (type png)
 <use cm_val.png>
-Package pdftex.def Info: cm_val.png  used on input line 256.
+Package pdftex.def Info: cm_val.png  used on input line 258.
 (pdftex.def)             Requested size: 318.66948pt x 281.54265pt.
-<cm_test.png, id=144, 372.1905pt x 328.8285pt>
+<cm_test.png, id=148, 372.1905pt x 328.8285pt>
 File: cm_test.png Graphic file (type png)
 <use cm_test.png>
-Package pdftex.def Info: cm_test.png  used on input line 263.
+Package pdftex.def Info: cm_test.png  used on input line 265.
 (pdftex.def)             Requested size: 318.66948pt x 281.54265pt.
-<cm_diff_data.png, id=145, 359.9046pt x 328.8285pt>
+<cm_diff_data.png, id=149, 359.9046pt x 328.8285pt>
 File: cm_diff_data.png Graphic file (type png)
 <use cm_diff_data.png>
-Package pdftex.def Info: cm_diff_data.png  used on input line 270.
+Package pdftex.def Info: cm_diff_data.png  used on input line 272.
 (pdftex.def)             Requested size: 318.66948pt x 291.17627pt.
-[5
+[6
 
-] [6] [7] [8 <./cm_val.png> <./cm_test.png>] [9 <./cm_diff_data.png>]
+] [7] [8] [9 <./cm_val.png> <./cm_test.png>] [10 <./cm_diff_data.png>]
 (main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A5B6B944F0A2222221713ABAE39EDBFA;1230.
+(rerunfilecheck)             Checksum: C7C441554122CDB1789C159490E6208A;1291.
  ) 
 Here is how much of TeX's memory you used:
- 15432 strings out of 474486
- 240689 string characters out of 5760178
+ 15439 strings out of 474486
+ 240750 string characters out of 5760178
  1960542 words of memory out of 5000000
  37247 multiletter control sequences out of 15000+600000
- 601936 words of font info for 213 fonts, out of 8000000 for 9000
+ 602193 words of font info for 217 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,12n,93p,1003b,469s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,93p,1232b,469s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/MiKTeX/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><C:/MiKTeX/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb><C:/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmmi10.pfb><C:/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/MiKTeX/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/MiKTeX/fonts/type1/urw/times/utmb8a.
 pfb><C:/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/MiKTeX/fonts/type1/urw/time
 s/utmri8a.pfb>
-Output written on main.pdf (9 pages, 214625 bytes).
+Output written on main.pdf (10 pages, 221227 bytes).
 PDF statistics:
- 262 PDF objects out of 1000 (max. 8388607)
- 53 named destinations out of 1000 (max. 500000)
+ 266 PDF objects out of 1000 (max. 8388607)
+ 54 named destinations out of 1000 (max. 500000)
  44136 words of extra memory for PDF output out of 51595 (max. 10000000)
 
