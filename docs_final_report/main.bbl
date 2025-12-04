@@ -1,5 +1,25 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
+
+\bibitem[{pre()}]{prepscholar}
+
+\newblock Argumentative essay examples.
+\newblock \url{https://blog.prepscholar.com/argumentative-essay-examples}.
+\newblock Accessed: 2025-12-01.
+
+\bibitem[{sky()}]{skylinecollege_essay_guide}
+
+\newblock Argumentative essays: A step-by-step guide — skyline college
+  library.
+\newblock \url{https://guides.skylinecollege.edu/c.php?g=279231&p=2778200}.
+\newblock Accessed: 2025-12-01.
+
+\bibitem[{bce()}]{bced_en12_comp_sp}
+
+\newblock Student samples – english 12 composition.
+\newblock
+  \url{https://www2.gov.bc.ca/assets/gov/education/administration/kindergarten-to-grade-12/exams/student-samples/en12-comp-sp.pdf}.
+\newblock Accessed: 2025-12-01.
 
 \bibitem[{Al-Ahmadi()}]{kaggle_ai_FarisML}
 Faris Al-Ahmadi.
@@ -90,12 +110,5 @@ Muhammad Rizqi. 2023.
 \newblock
   \url{https://www.kaggle.com/datasets/kingki19/llm-generated-essay-using-palm-from-google-gen-ai}.
 \newblock Accessed: 2025-11-08.
-
-\bibitem[{Sanh et~al.(2020)Sanh, Debut, Chaumond, and
-  Wolf}]{sanh2020distilbertdistilledversionbert}
-Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf. 2020.
-\newblock \href {https://arxiv.org/abs/1910.01108} {Distilbert, a distilled
-  version of bert: smaller, faster, cheaper and lighter}.
-\newblock \emph{Preprint}, arXiv:1910.01108.
 
 \end{thebibliography}

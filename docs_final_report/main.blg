@@ -1,58 +1,66 @@
-This is BibTeX, Version 0.99d (TeX Live 2025)
+This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 11 items.
 The style file: acl_natbib.bst
-Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
-Reallocated global_strs (elt_size=200001) to 20 items from 10.
-Reallocated glb_str_end (elt_size=4) to 20 items from 10.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocating 'name_of_file' (item size: 1) to 7 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Database file #1: custom.bib
+Warning--to sort, need author or key in prepscholar
+Warning--to sort, need author or key in skylinecollege_essay_guide
+Warning--to sort, need author or key in bced_en12_comp_sp
+Warning--empty year in prepscholar
+Warning--empty year in skylinecollege_essay_guide
+Warning--empty year in bced_en12_comp_sp
 Warning--empty year in kaggle_ai_FarisML
 Warning--empty year in kaggle_ai_alexia
 Warning--empty year in kaggle_ai_siti
 Warning--empty year in kaggle_ai_daigt
 Warning--empty year in kaggle_jasmine
-You've used 14 entries,
+You've used 16 entries,
             3764 wiz_defined-function locations,
-            803 strings with 8211 characters,
-and the built_in function-call counts, 7574 in all, are:
-= -- 720
-> -- 289
+            807 strings with 8453 characters,
+and the built_in function-call counts, 8033 in all, are:
+= -- 780
+> -- 252
 < -- 13
-+ -- 115
-- -- 85
-* -- 379
-:= -- 1247
-add.period$ -- 62
-call.type$ -- 14
-change.case$ -- 109
-chr.to.int$ -- 17
-cite$ -- 19
-duplicate$ -- 462
-empty$ -- 570
-format.name$ -- 104
-if$ -- 1670
++ -- 102
+- -- 73
+* -- 381
+:= -- 1280
+add.period$ -- 70
+call.type$ -- 16
+change.case$ -- 118
+chr.to.int$ -- 19
+cite$ -- 33
+duplicate$ -- 511
+empty$ -- 640
+format.name$ -- 89
+if$ -- 1796
 int.to.chr$ -- 2
 int.to.str$ -- 1
-missing$ -- 84
-newline$ -- 85
-num.names$ -- 56
-pop$ -- 235
+missing$ -- 89
+newline$ -- 98
+num.names$ -- 52
+pop$ -- 264
 preamble$ -- 1
-purify$ -- 84
+purify$ -- 88
 quote$ -- 0
-skip$ -- 426
+skip$ -- 459
 stack$ -- 0
-substring$ -- 181
-swap$ -- 179
+substring$ -- 215
+swap$ -- 182
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 126
-warning$ -- 5
-while$ -- 42
+type$ -- 144
+warning$ -- 11
+while$ -- 39
 width$ -- 0
-write$ -- 191
-(There were 5 warnings)
+write$ -- 214
+(There were 11 warnings)
