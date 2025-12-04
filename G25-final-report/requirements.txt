@@ -1,0 +1,6 @@
+
+pandas
+tensorflow==2.15.0
+scikeras
+rich
+matplotlib

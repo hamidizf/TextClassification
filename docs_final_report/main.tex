@@ -139,7 +139,8 @@ To specifically address the fragility of the TF-IDF and punctuation features and
 \bibliography{custom}
 
 \subsection*{Tables and figures}
-See Table \ref{sub-datasets}, Table \ref{ai_generated_prompts}, and Table \ref{human_essays}.
+\listoftables
+\listoffigures
 \begin{table*}
 \centering
 \begin{tabular}{p{4cm}p{11cm}}
@@ -285,20 +286,4 @@ See Table \ref{sub-datasets}, Table \ref{ai_generated_prompts}, and Table \ref{h
   \label{eq:idf}
   IDF(w, C) = \log\left( \frac{|C|}{|\{\, d \in C : w \in d \,\}|} \right)
 \end{equation}
-
-% \begin{table*}[htb]
-% \centering
-% \caption{Performance Accross Different Feature Sets}
-% \label{table:preformance}
-% \begin{tabular}{l c c c} 
-%   \toprule
-%   \textbf{Features Used} & \textbf{Total Features} & \textbf{Test Accuracy} & \textbf{Test F1 Score} \\
-%   \midrule
-%   Punction (Baseline) & 18 & 0.83 & 0.7758 \\
-%   TF-IDF & 10 000 & 0.9973 & 0.9966 \\
-%   Word Counts + TF-IDF & 10 003 & 0.9973 & 0.9966 \\
-%   All features & 10 021 & 0.9971 & 0.9963 \\
-%   \bottomrule
-% \end{tabular}
-% \end{table*}
 \end{document}

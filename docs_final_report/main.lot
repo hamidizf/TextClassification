@@ -1,0 +1,6 @@
+\contentsline {table}{\numberline {1}{\ignorespaces Summary of Datasets Used in the DAIGT V2 Train Dataset}}{7}{table.caption.5}%
+\contentsline {table}{\numberline {2}{\ignorespaces Prompts Used to Generate Argumentative Essays, 5 essays were generated from each}}{7}{table.caption.6}%
+\contentsline {table}{\numberline {3}{\ignorespaces Sources of Human written essays}}{8}{table.caption.7}%
+\contentsline {table}{\numberline {4}{\ignorespaces Validation Evaluation Metrics}}{8}{table.caption.8}%
+\contentsline {table}{\numberline {5}{\ignorespaces Test Evaluation Metrics (In-Distribution)}}{8}{table.caption.9}%
+\contentsline {table}{\numberline {6}{\ignorespaces External Data Drift Evaluation Metrics (Critical Failure)}}{8}{table.caption.10}%
